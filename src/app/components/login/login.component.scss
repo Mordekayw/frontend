@@ -1,0 +1,208 @@
+// Paleta de Colores
+$color-oasis: #4A90E2;
+$color-royal: #4169E1;
+$color-deep: #1E3A8A;
+$color-white: #ffffff;
+$color-black: #1a1a1a;
+$color-soft-black: #2d2d2d;
+$color-carbon-black: #0f0f0f;
+$color-dark-gray: #334155;
+$color-danger: #dc3545;
+
+// Sombras
+$shadow-black: rgba(0, 0, 0, 0.4);
+$shadow-blue-light: rgba(74, 144, 226, 0.3);
+$shadow-blue-dark: rgba(74, 144, 226, 0.4);
+
+// Transiciones
+$transition-speed: 0.3s;
+$transition-ease: ease;
+
+@mixin gradient-blue-btn($start-color: $color-oasis, $end-color: $color-royal) {
+  background: linear-gradient(135deg, $start-color 0%, $end-color 100%);
+}
+
+@mixin gradient-page-bg() {
+  background: linear-gradient(135deg, $color-carbon-black 0%, $color-black 30%, $color-dark-gray 70%, #F0F8FF 100%);
+}
+
+@mixin gradient-form-bg() {
+  background: linear-gradient(145deg, $color-soft-black 0%, $color-black 50%, $color-dark-gray 100%);
+}
+
+@mixin gradient-input-bg() {
+  background: linear-gradient(145deg, $color-soft-black 0%, $color-black 100%);
+}
+
+@mixin transition-smooth() {
+  transition: all $transition-speed $transition-ease;
+}
+
+@mixin focus-glow() {
+  border-color: $color-royal;
+  box-shadow: 0 0 20px $color-oasis, inset 0 2px 5px $shadow-black;
+  outline: none;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  @include gradient-page-bg();
+  padding: 20px;
+
+  .btn-back-home {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    @include gradient-blue-btn();
+    color: $color-white;
+    border: none;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    box-shadow: 0 8px 25px $shadow-blue-light;
+    @include transition-smooth();
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+      @include gradient-blue-btn($color-royal, $color-deep);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px $shadow-blue-dark;
+    }
+  }
+
+  .login-container {
+    max-width: 450px;
+    width: 90%;
+    padding: 50px 40px; // 🚀 Aumento del padding vertical para que coincida más con la imagen
+    @include gradient-form-bg();
+    color: $color-white;
+    border-radius: 25px;
+    box-shadow: 0 20px 60px $shadow-black, 0 0 30px $shadow-blue-dark;
+    border: 2px solid $color-oasis;
+    backdrop-filter: blur(10px); // 🚀 Reducción del blur para un efecto más sutil
+    z-index: 10;
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px; // 🚀 Más separación del subtítulo
+      color: $color-oasis;
+      font-weight: 700;
+      font-size: 2.5rem; // 🚀 Tamaño de fuente ligeramente más grande
+      text-shadow: 0 2px 8px $shadow-black, 0 0 20px $color-oasis; // 🚀 Glow un poco más pronunciado
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 40px; // 🚀 Más separación del primer campo
+      color: $color-white;
+      font-style: italic;
+      text-shadow: 0 1px 3px $shadow-black;
+    }
+
+    form {
+        .mb-3 {
+            margin-bottom: 30px !important; // 🚀 Mayor separación entre campos
+        }
+
+        .d-grid {
+            margin-top: 40px !important; // 🚀 Más espacio antes del botón
+        }
+    }
+
+    .form-label {
+      color: $color-white;
+      font-weight: 600;
+      margin-bottom: 15px; // 🚀 Separación de etiqueta y campo
+      text-shadow: 0 1px 3px $shadow-black;
+      display: block; // 🚀 Asegura que la etiqueta tome su propia línea
+    }
+
+    .form-control {
+      @include gradient-input-bg();
+      border: 2px solid $color-oasis;
+      color: $color-white;
+      border-radius: 15px;
+      padding: 15px;
+      @include transition-smooth();
+      box-shadow: inset 0 2px 5px $shadow-black;
+
+      // 🚀 Mejora: Placeholder sutil
+      &::placeholder {
+        color: rgba($color-white, 0.6);
+        @include transition-smooth();
+      }
+
+      &:focus {
+        @include focus-glow();
+        background: linear-gradient(145deg, $color-black 0%, $color-deep 20%, $color-black 100%);
+        color: $color-white;
+
+        &::placeholder {
+            color: rgba($color-white, 0.3); // Placeholder se vuelve más transparente en focus
+        }
+      }
+    }
+
+    .btn-primary {
+      @include gradient-blue-btn();
+      border: none;
+      color: $color-white;
+      font-weight: 600;
+      border-radius: 25px;
+      padding: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 25px $shadow-blue-light;
+      @include transition-smooth();
+
+      &:hover:not(:disabled) {
+        @include gradient-blue-btn($color-royal, $color-deep);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px $shadow-blue-dark;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: 0 8px 25px $shadow-black;
+      }
+    }
+
+    .alert-danger {
+      background-color: $color-danger;
+      border-color: $color-danger;
+      color: $color-white;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 25px; // 🚀 Más separación del botón
+      font-size: 0.95rem; // 🚀 Ligeramente más pequeño
+
+      a {
+        color: $color-oasis;
+        text-decoration: none;
+        font-weight: 600;
+        @include transition-smooth();
+
+        &:hover {
+          text-decoration: underline;
+          color: $color-royal;
+        }
+      }
+    }
+  }
+}

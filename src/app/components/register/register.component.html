@@ -1,0 +1,93 @@
+<div class="register-page">
+  <a routerLink="/" class="btn-back-home" aria-label="Regresar a la página principal">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i> Regresar
+  </a>
+
+  <div class="register-container" role="main">
+    <header class="register-header">
+      <h2>
+        <i class="fas fa-hotel" aria-hidden="true"></i> **Oasis Digital**
+      </h2>
+      <p class="subtitle">Registro de Nuevo Huésped</p>
+    </header>
+
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert" aria-live="assertive">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success" role="alert" aria-live="polite">
+      {{ successMessage }}
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- Sección de Datos Personales -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="nombres" class="form-label">Nombres:</label>
+          <input type="text" id="nombres" formControlName="nombres" class="form-control" required aria-required="true"
+            placeholder="Ej: Juan Andrés">
+        </div>
+        <div class="col-md-6">
+          <label for="apellidos" class="form-label">Apellidos:</label>
+          <input type="text" id="apellidos" formControlName="apellidos" class="form-control" required
+            aria-required="true" placeholder="Ej: Pérez Lópes">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="dni" class="form-label">DNI (8 dígitos):</label>
+          <input type="text" id="dni" formControlName="dni" class="form-control" maxlength="8" required
+            aria-required="true" placeholder="Ingresa 8 dígitos numéricos">
+        </div>
+        <div class="col-md-6">
+          <label for="nacionalidad" class="form-label">Nacionalidad:</label>
+          <input type="text" id="nacionalidad" formControlName="nacionalidad" class="form-control"
+            placeholder="Ej: Peruana o Colombiana">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" id="email" formControlName="email" class="form-control" required aria-required="true"
+            placeholder="ejemplo@correo.com">
+        </div>
+        <div class="col-md-6">
+          <label for="telefono" class="form-label">Teléfono (9 dígitos):</label>
+          <input type="text" id="telefono" formControlName="telefono" class="form-control" maxlength="9"
+            placeholder="9 dígitos sin espacios ni guiones">
+        </div>
+      </div>
+
+      <hr aria-hidden="true"> <!-- Separador de sección -->
+
+      <!-- Sección de Credenciales de Acceso -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Nombre de Usuario (Login):</label>
+        <input type="text" id="username" formControlName="username" class="form-control" required aria-required="true"
+          placeholder="Define tu nombre de usuario para acceder">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña:</label>
+        <input type="password" id="password" formControlName="password" class="form-control" required
+          aria-required="true" placeholder="Mínimo 8 caracteres">
+      </div>
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirmar Contraseña:</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control" required
+          aria-required="true" placeholder="Repite la contraseña">
+      </div>
+
+      <div class="d-grid gap-2 mt-4">
+        <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid || isLoading" aria-live="polite">
+          <i class="fas fa-user-plus" aria-hidden="true"></i>
+          <span *ngIf="!isLoading">Registrarse</span>
+          <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Cargando...</span>
+        </button>
+      </div>
+    </form>
+    <div class="login-link">
+      ¿Ya tienes una cuenta? <a routerLink="/login">**Accede aquí**</a>
+    </div>
+  </div>
+</div>

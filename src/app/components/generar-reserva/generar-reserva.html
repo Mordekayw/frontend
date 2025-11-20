@@ -1,0 +1,113 @@
+<app-navbar></app-navbar>
+
+<div class="container py-5">
+  <div *ngIf="successMessage" class="alert alert-success mt-3" role="alert">
+    <i class="fas fa-check-circle me-2"></i>{{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMessage }}
+  </div>
+  <div *ngIf="infoMessage" class="alert alert-info mt-3" role="alert">
+    <i class="fas fa-info-circle me-2"></i>{{ infoMessage }}
+  </div>
+
+  <div class="form-section">
+    <h2 class="text-center mb-4"><i class="fas fa-calendar-plus me-2"></i> Generar Nueva Reserva</h2>
+
+    <div class="mb-5 p-3 client-search-box">
+      <label for="dniSearch" class="form-label"><i class="fas fa-id-card me-2"></i> Buscar Cliente por DNI</label>
+      <div class="input-group">
+        <input type="text" id="dniSearch" class="form-control form-control-lg" [(ngModel)]="dniBuscar"
+          placeholder="Ingrese DNI (8 dígitos)" maxlength="8" pattern="[0-9]{8}" aria-label="Buscar Cliente por DNI"
+          [disabled]="cliente !== null">
+        <button class="btn btn-primary" (click)="buscarCliente()"
+          [disabled]="dniBuscar?.length !== 8 || cliente !== null">
+          <i class="fas fa-search me-1"></i> Buscar
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="cliente" class="card mb-5 client-card">
+      <div class="card-header bg-success text-white">
+        <h5 class="mb-0"><i class="fas fa-user-check me-2"></i> Cliente Seleccionado</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <strong><i class="fas fa-signature me-1"></i> Nombres:</strong> {{ cliente.nombres }}
+          </div>
+          <div class="col-md-6">
+            <strong><i class="fas fa-signature me-1"></i> Apellidos:</strong> {{ cliente.apellidos }}
+          </div>
+          <div class="col-md-6">
+            <strong><i class="fas fa-id-card-alt me-1"></i> DNI:</strong> {{ cliente.dni }}
+          </div>
+          <div class="col-md-6">
+            <strong><i class="fas fa-phone me-1"></i> Teléfono:</strong> {{ cliente.telefono }}
+          </div>
+          <div class="col-md-12">
+            <strong><i class="fas fa-envelope me-1"></i> Email:</strong> {{ cliente.email }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form (ngSubmit)="guardarReserva()">
+      <div class="mb-4">
+        <label for="roomSelect" class="form-label"><i class="fas fa-bed me-2"></i> Habitación Disponible</label>
+        <select id="roomSelect" class="form-select form-select-lg" [(ngModel)]="habitacionSeleccionadaId"
+          name="habitacion" (change)="onHabitacionChange()" required [disabled]="!cliente">
+          <option [ngValue]="null">Seleccione una habitación</option>
+          <option *ngFor="let hab of habitacionesDisponibles" [ngValue]="hab.id">
+            {{ hab.numero }} - {{ hab.tipo }} - S/. {{ hab.precioPorNoche }}/noche
+          </option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <label for="fechaInicio" class="form-label"><i class="fas fa-calendar-alt me-2"></i> Fecha de Entrada</label>
+          <input type="date" id="fechaInicio" class="form-control" [(ngModel)]="reserva.fechaInicio" name="fechaInicio"
+            (change)="onFechaChange()" required [disabled]="!habitacionSeleccionadaId">
+        </div>
+        <div class="col-md-6 mb-4">
+          <label for="fechaFin" class="form-label"><i class="fas fa-calendar-alt me-2"></i> Fecha de Salida</label>
+          <input type="date" id="fechaFin" class="form-control" [(ngModel)]="reserva.fechaFin" name="fechaFin"
+            (change)="onFechaChange()" required [disabled]="!reserva.fechaInicio">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <label for="horaEntrada" class="form-label"><i class="far fa-clock me-2"></i> Hora de Entrada</label>
+          <input type="time" id="horaEntrada" class="form-control" [(ngModel)]="reserva.horaEntrada" name="horaEntrada"
+            required [disabled]="!reserva.fechaFin">
+        </div>
+        <div class="col-md-6 mb-4">
+          <label for="horaSalida" class="form-label"><i class="far fa-clock me-2"></i> Hora de Salida</label>
+          <input type="time" id="horaSalida" class="form-control" [(ngModel)]="reserva.horaSalida" name="horaSalida"
+            required [disabled]="!reserva.horaEntrada">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <label class="form-label"><i class="fas fa-hourglass-half me-2"></i> Días de Estadía</label>
+          <input type="text" class="form-control" [value]="diasEstadia || 0" readonly>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label class="form-label"><i class="fas fa-dollar-sign me-2"></i> Total a Pagar</label>
+          <input type="text" class="form-control total-input" [value]="'S/ ' + totalPagar.toFixed(2)" readonly>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success btn-lg w-100 mt-4"
+        [disabled]="!cliente || !habitacionSeleccionadaId || !reserva.fechaInicio || !reserva.fechaFin || !reserva.horaEntrada || !reserva.horaSalida">
+        <i class="fas fa-check me-2"></i> Confirmar Reserva
+      </button>
+      <a routerLink="/dashboard" class="btn btn-outline-light w-100 mt-3 btn-lg">
+        <i class="fas fa-arrow-left me-2"></i> Volver al Dashboard
+      </a>
+    </form>
+  </div>
+</div>

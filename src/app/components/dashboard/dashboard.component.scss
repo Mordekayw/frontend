@@ -1,0 +1,201 @@
+$color-white: #ffffff;
+$color-black: #141414;
+$color-deep: #1d2538;
+$color-soft-black: #2c2c2c;
+$color-secondary: #333333; // Usado en las alertas
+
+// Colores de diseño y estado
+$color-oasis: #00d2ff;
+$color-royal: #4e73df;
+$color-info: #17a2b8;
+$color-success: #28a745;
+$color-danger: #dc3545;
+$color-warning: #ffc107;
+
+// Sombras
+$shadow-black: rgba(0, 0, 0, 0.5);
+$shadow-blue-light: rgba(0, 150, 255, 0.2);
+
+
+// ===================================================
+// 2. DEFINICIÓN DE MIXINS
+// ===================================================
+
+@mixin transition-smooth() {
+    transition: all 0.3s ease-in-out;
+}
+
+@mixin gradient-page-bg() {
+    // Usa $color-black y $color-deep definidos arriba
+    background-image: linear-gradient(180deg, $color-black 0%, $color-deep 100%);
+    background-attachment: fixed;
+}
+
+@mixin gradient-form-bg() {
+    // Usa $color-soft-black y $color-black definidos arriba
+    background-image: linear-gradient(135deg, $color-soft-black 0%, $color-black 100%);
+}
+
+
+// ===================================================
+// 3. MAPA DE COLORES (Para Badges)
+// ===================================================
+
+$badge-colors: (
+  primary: $color-oasis,
+  info: $color-info,
+  success: $color-success,
+  danger: $color-danger,
+  warning: $color-warning
+);
+
+
+// ===================================================
+// 4. BASE Y LAYOUT
+// ===================================================
+
+body {
+  @include gradient-page-bg();
+  color: $color-white;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+h2, h3 {
+  color: $color-oasis;
+  font-weight: 700;
+}
+
+.lead {
+  color: rgba($color-white, 0.8);
+  margin-bottom: 30px;
+}
+
+// ===================================================
+// 5. COMPONENTES (Tarjetas de Métrica)
+// ===================================================
+
+.metric-card {
+  @include gradient-form-bg();
+  @include transition-smooth();
+
+  border: 2px solid $color-oasis;
+  border-radius: 20px;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+
+  box-shadow: 0 10px 30px $shadow-black, 0 0 20px $shadow-blue-light;
+
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px $shadow-black, 0 0 30px $color-oasis;
+    border-color: $color-royal;
+  }
+
+  i.fas {
+    color: $color-oasis;
+    margin-bottom: 15px;
+  }
+
+  .metric-value {
+    color: $color-oasis;
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 10px 0 5px;
+    text-shadow: 0 2px 8px $shadow-black, 0 0 15px $color-oasis;
+  }
+
+  .metric-label {
+    color: $color-white;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-shadow: 0 1px 3px $shadow-black;
+  }
+}
+
+// ===================================================
+// 6. COMPONENTES (Tablas)
+// ===================================================
+
+.table-responsive {
+  border: 2px solid $color-oasis;
+  border-radius: 15px;
+  margin-top: 30px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px $shadow-black;
+
+  .table {
+    background-color: $color-black;
+    color: $color-white;
+    margin-bottom: 0;
+
+    thead {
+      // Usa $color-black, $color-deep y $color-soft-black
+      background-image: linear-gradient(90deg, $color-black 0%, $color-deep 50%, $color-soft-black 100%);
+
+      th {
+        color: $color-white;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 15px;
+        border-bottom: 3px solid $color-oasis;
+      }
+    }
+
+    tbody {
+      td {
+        color: $color-white;
+        padding: 12px 15px;
+        border-bottom: 1px solid rgba($color-oasis, 0.2);
+      }
+
+      tr {
+        @include transition-smooth();
+
+        &:hover {
+          background-color: $color-soft-black;
+        }
+      }
+    }
+  }
+}
+
+// ===================================================
+// 7. COMPONENTES (Badges y Alertas)
+// ===================================================
+
+.badge {
+  color: $color-white;
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  padding: 8px 15px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px $shadow-black;
+
+  @each $name, $color in $badge-colors {
+    &.bg-#{$name} {
+      background-color: $color;
+    }
+  }
+}
+
+.alert-info {
+  background-color: $color-secondary; // Usa $color-secondary
+  color: $color-white;
+
+  border: 1px solid rgba($color-oasis, 0.5);
+  border-radius: 10px;
+  margin: 20px 0;
+  padding: 15px;
+}

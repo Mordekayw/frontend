@@ -1,0 +1,207 @@
+/* Variables de Color (Colores Oscuros - Elegante/Cyber) */
+$azul-oasis: #4A90E2;       // Azul principal
+$azul-claro: #87CEEB;       // Azul para brillos
+$azul-profundo: #1E3A8A;    // Azul oscuro para gradientes
+$azul-royal: #4169E1;       // Azul de acento
+$blanco: #ffffff;
+$gris-claro: #F8FAFC;
+$gris-oscuro: #334155;      // Gris para fondos oscuros
+$negro: #1a1a1a;
+$negro-suave: #2d2d2d;
+$negro-profundo: #000000;
+$dorado-elegante: #F59E0B; // Dorado/Naranja para botones de acción secundaria
+$sombra-azul: rgba(74, 144, 226, 0.4);
+$sombra-negra: rgba(0, 0, 0, 0.6);
+$sombra-negra-intensa: rgba(0, 0, 0, 0.9);
+$gris-medio: #64748b; // Añadido para disabled states
+
+/* Mixins Reutilizables */
+@mixin button-hover($bg-color: $azul-oasis, $text-color: $blanco) {
+  background: linear-gradient(135deg, $bg-color 50%, $azul-royal 100%);
+  color: $text-color;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 20px $sombra-negra-intensa;
+  transition: all 0.3s ease;
+}
+
+@mixin form-input-style {
+  background: $negro-profundo !important;
+  border: 1px solid $gris-oscuro !important;
+  color: $blanco !important;
+  border-radius: 8px !important;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  text-shadow: 0 0 5px $sombra-azul; /* Sutil efecto de resplandor en el texto */
+  transition: all 0.3s ease;
+
+  &:focus {
+    background: $negro-profundo !important;
+    border-color: $azul-royal !important;
+    color: $blanco !important;
+    box-shadow: 0 0 15px $sombra-azul !important; /* Brillo más intenso al enfocar */
+  }
+
+  &[disabled] {
+    opacity: 0.8;
+    background: $negro-suave !important;
+    color: $gris-medio !important;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+/* Estilos Globales para el Componente */
+.container {
+  margin-top: 100px;
+  margin-bottom: 50px;
+  max-width: 900px; /* Limitar el ancho para centrar mejor el formulario */
+}
+
+.form-section {
+  background: $negro-suave;
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid $azul-profundo;
+
+  /* Brillo azul exterior y sombra interior para profundidad */
+  box-shadow: 0 0 30px $sombra-azul, inset 0 0 10px $negro-profundo;
+  backdrop-filter: blur(5px);
+}
+
+h2 {
+  color: $azul-oasis;
+  font-family: 'Inter', sans-serif; /* Usar Inter como default, o Playfair si es más formal */
+  font-weight: 700;
+  text-shadow: 0 0 15px $azul-claro; /* Efecto de resplandor */
+  padding-bottom: 10px;
+  border-bottom: 2px solid $azul-profundo;
+}
+
+.form-label {
+  color: $blanco !important;
+  font-weight: 400 !important;
+  margin-bottom: 0.5rem;
+
+  /* Pequeño resplandor en etiquetas */
+  text-shadow: 0 0 3px $sombra-azul;
+}
+
+/* Sección Específica de Búsqueda de Cliente */
+.client-search-box {
+  background: $negro-profundo;
+  border: 1px solid $azul-profundo;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(74, 144, 226, 0.15); /* Sombra más sutil */
+}
+
+/* Estilos de Formularios (Aplicando Mixin) */
+.form-control, .form-select {
+  @include form-input-style;
+}
+
+.form-select option {
+  background: $negro-profundo !important;
+  color: $blanco !important;
+}
+
+.total-input {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: $dorado-elegante !important;
+  border-color: $dorado-elegante !important;
+}
+
+/* Estilos de Alertas */
+.alert {
+  border-radius: 10px;
+  font-weight: 500;
+  padding: 1rem 1.5rem;
+
+  &.alert-success {
+    background-color: #0d471d; // Verde oscuro
+    border-color: #4CAF50;
+    color: $blanco;
+  }
+  &.alert-danger {
+    background-color: #58151c; // Rojo oscuro
+    border-color: #F44336;
+    color: $blanco;
+  }
+  &.alert-info {
+    // Info sigue la paleta azul/gris oscuro
+    background-color: $gris-oscuro !important;
+    border-color: $azul-oasis !important;
+    color: $blanco !important;
+    box-shadow: 0 0 8px $sombra-azul;
+  }
+}
+
+/* Estilos de Tarjeta de Cliente */
+.client-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px $sombra-negra;
+
+  .card-header {
+    background-color: $azul-oasis !important;
+    border-bottom: 1px solid $azul-royal;
+    padding: 1rem 1.5rem;
+  }
+  .card-body {
+    background-color: $negro-suave;
+    color: $blanco;
+    border: 1px solid $azul-profundo;
+    border-top: none;
+    padding: 25px;
+  }
+}
+
+/* Estilos de Botones */
+.btn {
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+
+  &.btn-primary {
+    background-color: $azul-royal;
+    border-color: $azul-royal;
+    border-radius: 0 8px 8px 0;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: $azul-oasis;
+      border-color: $azul-oasis;
+    }
+  }
+
+  &.btn-success {
+    background: linear-gradient(90deg, $azul-oasis 0%, $azul-royal 100%);
+    border-color: $azul-oasis;
+    color: $blanco;
+
+    &:hover {
+      @include button-hover($azul-royal, $blanco);
+    }
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: $gris-oscuro;
+      border-color: $gris-oscuro;
+      box-shadow: none;
+      transform: none;
+    }
+  }
+
+  &.btn-outline-light {
+    border: 2px solid $dorado-elegante;
+    color: $dorado-elegante;
+    background: $negro-profundo;
+
+    &:hover {
+      background-color: $dorado-elegante;
+      color: $negro-profundo;
+      box-shadow: 0 0 20px $dorado-elegante;
+      transform: scale(1.01);
+    }
+  }
+}

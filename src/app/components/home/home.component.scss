@@ -1,0 +1,245 @@
+// ====================================
+// 0. Variables SCSS (Variables globales)
+// ====================================
+$negro-fondo: #0a0a0a;             // Fondo principal, muy oscuro
+$negro-carbon: #1c1c1c;            // Fondo de tarjetas y secciones
+$negro-suave: #282828;             // Fondo de elementos interactivos
+$gris-oscuro: #8a8a8a;             // Texto secundario/bordes sutiles
+$azul-oasis: #00BCD4;              // Color de acento (Cyan Metalizado)
+$blanco: #ffffff;                  // Texto principal
+$sombra-negra: rgba(0, 0, 0, 0.7); // Sombra intensa
+
+// ====================================
+// 1. Estilos Generales y Secciones
+// ====================================
+
+// Estilos de la sección principal
+.section-custom {
+    padding: 80px 0;
+    // Uso de variables en la función linear-gradient
+    background: linear-gradient(135deg, $negro-fondo 0%, $negro-carbon 50%, $negro-fondo 100%);
+    color: $blanco;
+
+    // Anidamiento para títulos y subtítulos de sección
+    .section-title {
+        color: $blanco;
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+        color: $gris-oscuro;
+        text-align: center;
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+    }
+}
+
+// ====================================
+// 2. Sección Hero (Inicio)
+// ====================================
+.hero-section-custom {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $negro-fondo;
+    overflow: hidden;
+
+    .hero-overlay {
+        background: rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: $blanco;
+        padding: 40px 20px;
+
+        .hero-title-custom {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            // Uso de variable para la sombra
+            text-shadow: 0 4px 10px $sombra-negra;
+            letter-spacing: 2px;
+        }
+
+        .hero-subtitle-custom {
+            font-size: 1.6rem;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    }
+}
+
+
+// ====================================
+// 3. Botones (Uso de anidamiento y &)
+// ====================================
+
+// Estilos base para botones grandes
+.btn-lg {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+
+    // Botón principal
+    &.btn-primary {
+        background-color: $azul-oasis;
+        color: $negro-carbon !important;
+        border: 2px solid $azul-oasis;
+
+        &:hover {
+            background-color: $blanco;
+            border-color: $blanco;
+            color: $negro-fondo !important;
+            transform: translateY(-2px);
+            // Uso de la variable de acento en la sombra
+            box-shadow: 0 5px 15px rgba(0, 188, 212, 0.4);
+        }
+    }
+
+    // Botón secundario
+    &.btn-secondary {
+        background-color: transparent;
+        color: $azul-oasis !important;
+        border: 2px solid $azul-oasis;
+
+        &:hover {
+            background-color: $azul-oasis;
+            color: $negro-carbon !important;
+        }
+    }
+}
+
+// Modificador para botones pequeños
+.btn-sm {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+}
+
+// ====================================
+// 4. Tarjetas de Habitaciones
+// ====================================
+
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.room-card {
+    background: $negro-carbon;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px $sombra-negra;
+    border: none;
+    border-bottom: 4px solid $azul-oasis;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    &:hover {
+        transform: translateY(-5px);
+        // Sombra compuesta
+        box-shadow:
+            0 5px 15px rgba(0, 0, 0, 0.8),
+            0 0 20px rgba(0, 188, 212, 0.7); // Resplandor $azul-oasis
+    }
+
+    .room-image {
+        height: 250px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+
+        .room-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba($negro-carbon, 0.7); // Uso de variable en rgba
+            border: 1px solid $azul-oasis;
+            color: $azul-oasis;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+        }
+    }
+
+    .room-content {
+        padding: 25px;
+        color: $blanco;
+
+        h3 {
+            color: $azul-oasis;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+        }
+
+        .room-features {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            border-top: 1px solid $negro-suave;
+            padding-top: 15px;
+
+            span {
+                color: $gris-oscuro;
+                font-size: 0.9rem;
+                padding: 4px 8px;
+                border: 1px solid $gris-oscuro;
+                border-radius: 8px;
+            }
+        }
+    }
+
+    .room-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        border-top: 1px solid $negro-suave;
+        padding-top: 20px;
+
+        .room-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: $azul-oasis;
+
+            span {
+                font-size: 1rem;
+                opacity: 0.8;
+                font-weight: 400;
+                color: $gris-oscuro;
+            }
+        }
+    }
+}
